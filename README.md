@@ -1,16 +1,27 @@
 # Thunderbolt NAS bridge
 ## Background
-I only need 10Gbps networking between my MacBook Pro, which I use as my main development machine, and a Dell XPS 15
-9570 running Linux that serves as file storage and hosts a few lightweight services at home.
-To achieve this inexpensively—without investing in 10Gbps network equipment that would sit idle 99.9% of the time—I
+10Gbps networking at home is fantastic! But also either quite expensive or often buggy (cheap interfaces and switches are prone to overheating, throttling or 
+plain out failing). And pragmatically, I don't need 10Gbps between much of my gear; I primarily need a fast link between my
+MacBook Pro, which I use as my main development machine, and a Dell XPS 15
+9570 running Linux, that serves as file storage and hosts a few lightweight services at home.
+
+To achieve this inexpensively—without investing in 10Gbps network equipment that would sit either idle or underutilized 99.9% of the time—I
 simply have connected the MacBook directly to the XPS using a Thunderbolt 3 cable and configured a transparent network
-bridge on the XPS.
-This setup allows the MacBook to obtain its IP address from my DHCP server and appear as a peer host on my home network
+bridge on the XPS. This setup allows the MacBook to obtain its IP address from my DHCP server and appear as a peer host on my home network
 segment, with no need for NAT or other complications.
 
-By assigning an IP address to the bridge, the XPS becomes reachable from any host on my 
-network — including the MacBook — using the same address. This avoids the inconvenience of having to use different IPs
+By assigning a single IP address to the bridge, the XPS becomes reachable from any host on my 
+network — including the MacBook — using the same address. This avoids the inconvenience of having to use different IP addresses
 for the XPS depending on whether the MacBook is connected via Wi-Fi or Thunderbolt.
+
+### Pros
+* Fast and reliable networking between two hosts
+* Relatively easy to configure
+* Inexpensive
+
+### Cons
+* Limited physical range
+* Occupies a valuable Thunderbolt port
 
 ![img_5.png](images/main-illustration.png)
 
@@ -37,7 +48,7 @@ Deltaco with a Realtek RTL8153 chipset and it works just fine.
 ![img_8.png](images/deltaco-interface.png)
 
 ## Performance considerations on Linux
-The only thing that matters only Linux is the MTU of the interfaces. Make sure that both `tb0` and `br0` are set to
+The one thing that's important to get right on the Linux side is the MTU of the interfaces. Make sure that both `tb0` and `br0` are set to
 MTU 9000 (jumbo frames) to get the best performance. If this is not configured correctly, you will experience less than
 10Gbps results from `iperf3` and high CPU usage caused by the `ksoftirqd` process.  
 
