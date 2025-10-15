@@ -1,0 +1,11 @@
+[Match]
+Name=br0
+
+[Link]
+MTUBytes=9000
+
+[Network]
+DHCP=yes
+
+[DHCPv4]
+UseMTU=no

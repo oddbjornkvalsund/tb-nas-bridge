@@ -1,0 +1,6 @@
+[Match]
+MACAddress=00:e0:4a:6a:9b:bb
+
+[Link]
+Name=usb0
+MTUBytes=1500
