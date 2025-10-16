@@ -157,7 +157,9 @@ iperf Done.
 ## Relevant links
 * [Kernel documentation for USB4 and Thunderbolt](https://docs.kernel.org/admin-guide/thunderbolt.html)
 * [Documentation for systemd-networkd](https://www.freedesktop.org/software/systemd/man/latest/systemd.network.html)
+* https://chrisbergeron.com/2021/07/25/ultra-fast-thunderbolt-nas-with-apple-m1-and-linux/
 * https://forum.proxmox.com/threads/intel-nuc-13-pro-thunderbolt-ring-network-ceph-cluster.131107/
 * https://gist.github.com/geosp/80fbd39e617b7d1d9421683df4ea224a
 * https://gist.github.com/scyto/67fdc9a517faefa68f730f82d7fa3570
 * https://gist.github.com/thaynes43/6135cdde0b228900d70ab49dfe386f91
+* [DYI a Thunderbolt 3 NAS (YouTube video in Chinese)](https://www.youtube.com/watch?v=WZD2QaeB53M)
