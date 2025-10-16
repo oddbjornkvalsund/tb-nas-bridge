@@ -14,12 +14,12 @@ By assigning a single IP address to the bridge, the XPS becomes reachable from a
 network — including the MacBook — using the same address. This avoids the inconvenience of having to use different IP addresses
 for the XPS depending on whether the MacBook is connected via Wi-Fi or Thunderbolt.
 
-### Pros
+### 👍 Pros
 * Fast and reliable networking between two hosts
 * Relatively easy to configure
 * Inexpensive
 
-### Cons
+### 👎 Cons
 * Limited physical range
 * Occupies a valuable Thunderbolt port
 
@@ -34,6 +34,13 @@ The files in this repo are specific to my setup, but they should be easy to adap
 most importantly by editing the MAC addresses in the `[Match]` sections of the `.link` files. Run `install.sh` to copy
 the files to the correct location on your system after editing the MAC addresses.
 
+> [!NOTE]  
+> If you have existing `systemd-networkd` configuration files in `/etc/system/network` or a netplan configuration file in
+> `/etc/netplan`, you must verify that the files in this repo do not conflict with your existing configuration. 
+
+If you want to experiment with this type of setup before commiting to installing the `systemd` files,
+you can tweak and run `bridge.sh`. 
+
 ## Bridge topology and naming
 
 ![img_7.png](images/bridge-topology.png)
@@ -42,18 +49,28 @@ the files to the correct location on your system after editing the MAC addresses
 - `br0`: Network bridge (MTU 9000) that bridges `tb0` and `usb0`
 - `tb0`: Thunderbolt ethernet interface (10Gbps, MTU 9000)
 
-I'm using a USB ethernet interface simply because the XPS does not have a built-in ethernet port. The specific one I have is from
-Deltaco with a Realtek RTL8153 chipset and it works just fine.
+I'm using a USB ethernet interface simply because the XPS does not have an integrated ethernet interface.
+The specific one I have is from Deltaco with a Realtek RTL8153 chipset and it works just fine.
 
 ![img_8.png](images/deltaco-interface.png)
 
 ## Performance considerations on Linux
 The one thing that's important to get right on the Linux side is the MTU of the interfaces. Make sure that both `tb0` and `br0` are set to
 MTU 9000 (jumbo frames) to get the best performance. If this is not configured correctly, you will experience less than
-10Gbps results from `iperf3` and high CPU usage caused by the `ksoftirqd` process.  
+10Gbps results from `iperf3` and high CPU usage caused by the `ksoftirqd` process.
 
-Since the `thunderbolt-net` driver handles everything in software, there isn't any point trying to optimize
-offloading settings such as `tso`, `gso`, `sg`, `gro`, `lro`, `rx`, `tx` or the like on `tb0` and `br0`.
+> [!NOTE]
+> The `thunderbolt_net` module does not implement
+> [Receive Side Scaling (RSS)](https://www.kernel.org/doc/Documentation/networking/scaling.txt),
+> meaning that the kernel will not automatically distribute incoming packets to multiple CPU cores. If you're seeing
+> less than 10Gps performance from your Thunderbolt interface and 100% load on one CPU core caused by the `ksoftirqd`
+> process even after enabling jumbo frames, this is likely the cause and there is little that can be done about it,
+> apart from buying a faster CPU or trying to implement RSS in the
+> [thunderbolt_net](https://github.com/torvalds/linux/tree/master/drivers/net/thunderbolt) module yourself,
+> of course...
+
+Since the `thunderbolt_net` driver handles everything in software, there isn't any point trying to optimize
+offloading settings such as `tso`, `gso`, `sg`, `gro`, `lro`, `rx`, `tx` or the like on `tb0`.
 
 ## Performance considerations on macOS
 Apply the settings below manually to get the best network performance for this kind of setup on macOS.
