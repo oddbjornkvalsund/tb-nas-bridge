@@ -72,7 +72,7 @@ MTU 9000 (jumbo frames) to get the best performance. If this is not configured c
 > The `thunderbolt_net` module does not implement
 > [Receive Side Scaling (RSS)](https://www.kernel.org/doc/Documentation/networking/scaling.txt),
 > meaning that the kernel will not automatically distribute incoming packets to multiple CPU cores. If you're seeing
-> less than 10Gps performance from your Thunderbolt interface and 100% load on one CPU core caused by the `ksoftirqd`
+> less than 10Gbps performance from your Thunderbolt interface and 100% load on one CPU core caused by the `ksoftirqd`
 > process even after enabling jumbo frames, this is likely the cause and there is little that can be done about it,
 > apart from buying a faster CPU or trying to implement RSS in the
 > [thunderbolt_net](https://github.com/torvalds/linux/tree/master/drivers/net/thunderbolt) module yourself,
