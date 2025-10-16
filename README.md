@@ -37,7 +37,7 @@ cable is reconnected or when any of the machines reboot or wake up from sleep.
 >
 > The MAC address in the `00-br0-bridge.netdev` file can be left as-is. It gives the bridge a static MAC address that is
 > suitable for [local use](https://en.wikipedia.org/wiki/MAC_address#Ranges_of_group_and_locally_administered_addresses)
-> and you can configure your router's DHCP server to assign a static IP address to the MAC address if you so please.
+> and you can configure your router's DHCP server to assign a static IP address to this MAC address if you so please.
 > There is a *slight* chance there might be a conflict with an existing virtual interface on your network,
 > since `02:00:00:00:00:01` is the `127.0.0.1` of MAC addresses, but it's very unlikely for a small home network.
 > 
@@ -58,7 +58,8 @@ you can tweak and run `bridge.sh`.
 - `tb0`: Thunderbolt ethernet interface (10Gbps, MTU 9000)
 
 I'm using a USB ethernet interface simply because the XPS does not have an integrated ethernet interface.
-The specific one I have is from Deltaco with a Realtek RTL8153 chipset and it works just fine.
+The specific one I have is from Deltaco and is equipped with a Realtek RTL8153 chipset. It works just fine and even
+includes three bonus USB 3.0 ports
 
 ![img_8.png](images/deltaco-interface.png)
 
