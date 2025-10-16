@@ -41,7 +41,7 @@ cable is reconnected or when any of the machines reboot or wake up from sleep.
 > There is a *slight* chance there might be a conflict with an existing virtual interface on your network,
 > since `02:00:00:00:00:01` is the `127.0.0.1` of MAC addresses, but it's very unlikely for a small home network.
 > 
-> If you have existing `systemd-networkd` configuration files in `/etc/system/network` or a netplan configuration file in
+> ⚠️ If you have existing `systemd-networkd` configuration files in `/etc/system/network` or a netplan configuration file in
 > `/etc/netplan`, you must verify that the files in this repo do not conflict with your existing configuration.
 
 Run `install.sh` to copy the files to the correct location on your system after editing the MAC addresses.
