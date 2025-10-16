@@ -30,13 +30,21 @@ The files in this repo are used to configure the network bridge on my XPS via `s
 Ubuntu 24.04. The configuration makes for a robust setup that re-establishes the bridge correctly when the Thunderbolt
 cable is reconnected or when any of the machines reboot or wake up from sleep.
 
-The files in this repo are specific to my setup, but they should be easy to adapt to your own setup,
-most importantly by editing the MAC addresses in the `[Match]` sections of the `.link` files. Run `install.sh` to copy
-the files to the correct location on your system after editing the MAC addresses.
-
-> [!NOTE]  
+> [!CAUTION]  
+> You **need** to edit the MAC addresses in the `[Match]` sections of the `00-tb0-interface.link` and
+> `00-usb0-interface.link` files to match your own setup before installing the files in this repo.
+> The MAC addresses in the files are just examples.
+>
+> The MAC address in the `00-br0-bridge.netdev` file can be left as-is. It gives the bridge a static MAC address that is
+> suitable for [local use](https://en.wikipedia.org/wiki/MAC_address#Ranges_of_group_and_locally_administered_addresses)
+> and you can configure your router's DHCP server to assign a static IP address to the MAC address if you so please.
+> There is a *slight* chance there might be a conflict with an existing virtual interface on your network,
+> since `02:00:00:00:00:01` is the `127.0.0.1` of MAC addresses, but it's very unlikely for a small home network.
+> 
 > If you have existing `systemd-networkd` configuration files in `/etc/system/network` or a netplan configuration file in
-> `/etc/netplan`, you must verify that the files in this repo do not conflict with your existing configuration. 
+> `/etc/netplan`, you must verify that the files in this repo do not conflict with your existing configuration.
+
+Run `install.sh` to copy the files to the correct location on your system after editing the MAC addresses.
 
 If you want to experiment with this type of setup before commiting to installing the `systemd` files,
 you can tweak and run `bridge.sh`. 
