@@ -32,7 +32,7 @@ cable is reconnected or when any of the machines reboot or wake up from sleep.
 
 > [!CAUTION]  
 > You **need** to edit the MAC addresses in the `[Match]` sections of the `00-tb0-interface.link` and
-> `00-usb0-interface.link` files to match your own setup before installing the files in this repo.
+> `00-usb0-interface.link` files to match your own hardware before installing the files in this repo.
 > The MAC addresses in the files are just examples.
 >
 > The MAC address in the `00-br0-bridge.netdev` file can be left as-is. It gives the bridge a static MAC address that is
